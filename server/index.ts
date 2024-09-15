@@ -1,6 +1,7 @@
 import express from 'express';
 import http from 'http';
-import socket from './socket';
+
+import socket from './src/socket';
 
 const PORT = 3010;
 

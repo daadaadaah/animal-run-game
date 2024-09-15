@@ -107,6 +107,6 @@
     "skipLibCheck": true                                 /* Skip type checking all .d.ts files. */
   },
   
-  "include": ["./", "enums.ts"],
+  "include": ["./", "src/enums.ts"],
   "exclude": ["node_modules"]
 }
