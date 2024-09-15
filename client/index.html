@@ -45,7 +45,12 @@
         <div id="dog" class="animal dog">D</div>
     </div>
     <div>
-      <p id="msg"></p>
+      <p>현재 상태 : <spna id="status">Ready</spna> </p>
+      <p>사이클 : <spna id="cycle-cnt">0</spna></p>
+      <p>남은 시간 : <spna id="remaining-time">4</spna>초</p>
+      <p>토끼 위치 : <spna id="rabbit-postion">0</spna></p>
+      <p>거북이 위치 : <spna id="turtle-postion">0</spna></p>
+      <p>강아지 위치 : <spna id="dog-postion">0</spna></p>
     </div>
     <script>
       const socket = io('http://localhost:3010', {
@@ -57,10 +62,40 @@
         console.log('Connected to server');
       });
 
-      // 테스트 소켓 통신
-      socket.on('hello world', (msg) => {
-        console.log(msg);
-        document.getElementById('msg').textContent = msg;
+      // 게임 상태
+      socket.on('game-status', (currentGameStatus) => {
+
+        console.log("currentGameStatus : "+currentGameStatus);
+
+        // 서버에서 던져준 데이터
+        // const tempGameStatus = {
+        //     currentCycle: 23,
+        //     gameStatus: GameStatus.Ready, 
+        //     remainingTimeSecond: 1,
+        //     animals: [
+        //       {
+        //         type: Animal.Rabbit,
+        //         currentPosition: 5,
+        //       },
+        //       {
+        //         type: Animal.Turtle,
+        //         currentPosition: 3,
+        //       },
+        //       {
+        //         type: Animal.Dog,
+        //         currentPosition: 2,
+        //       }
+        //     ]
+        // };
+
+        document.getElementById('cycle-cnt').textContent = currentGameStatus.currentCycle;
+        document.getElementById('status').textContent = currentGameStatus.gameStatus;
+        document.getElementById('remaining-time').textContent = currentGameStatus.remainingTimeSecond;
+
+        // TODO : 해당 포지션에 따라 CSS에서도 보이게 + HTML/CSS도 배열을 사용할 수 있게
+        document.getElementById('rabbit-postion').textContent = currentGameStatus.animals[0].currentPosition;
+        document.getElementById('turtle-postion').textContent = currentGameStatus.animals[1].currentPosition;
+        document.getElementById('dog-postion').textContent = currentGameStatus.animals[2].currentPosition;
       });
     </script>
 </body>
