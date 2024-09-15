@@ -74,7 +74,7 @@ const socket = (server: http.Server) => {
           randomNum * 5, // 토끼
           randomNum * 3, // 거북이
           randomNum * 2 // 강아지
-        ]
+        ];
  
         io.emit(SocketEvents.GAMESTATUS, {
           currentCycle: cycleCnt,

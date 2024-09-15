@@ -45,12 +45,12 @@
         <div id="dog" class="animal dog">D</div>
     </div>
     <div>
-      <p>현재 상태 : <spna id="status">Ready</spna> </p>
-      <p>사이클 : <spna id="cycle-cnt">0</spna></p>
-      <p>남은 시간 : <spna id="remaining-time">4</spna>초</p>
-      <p>토끼 위치 : <spna id="rabbit-postion">0</spna></p>
-      <p>거북이 위치 : <spna id="turtle-postion">0</spna></p>
-      <p>강아지 위치 : <spna id="dog-postion">0</spna></p>
+      <p>현재 상태 : <span id="status">Ready</span> </p>
+      <p>사이클 : <span id="cycle-cnt">0</span></p>
+      <p>남은 시간 : <span id="remaining-time">4</span>초</p>
+      <p>토끼 위치 : <span id="rabbit-postion">0</span></p>
+      <p>거북이 위치 : <span id="turtle-postion">0</span></p>
+      <p>강아지 위치 : <span id="dog-postion">0</span></p>
     </div>
     <script>
       const socket = io('http://localhost:3010', {
@@ -67,26 +67,6 @@
 
         console.log("currentGameStatus : "+currentGameStatus);
 
-        // 서버에서 던져준 데이터
-        // const tempGameStatus = {
-        //     currentCycle: 23,
-        //     gameStatus: GameStatus.Ready, 
-        //     remainingTimeSecond: 1,
-        //     animals: [
-        //       {
-        //         type: Animal.Rabbit,
-        //         currentPosition: 5,
-        //       },
-        //       {
-        //         type: Animal.Turtle,
-        //         currentPosition: 3,
-        //       },
-        //       {
-        //         type: Animal.Dog,
-        //         currentPosition: 2,
-        //       }
-        //     ]
-        // };
 
         document.getElementById('cycle-cnt').textContent = currentGameStatus.currentCycle;
         document.getElementById('status').textContent = currentGameStatus.gameStatus;
@@ -96,6 +76,11 @@
         document.getElementById('rabbit-postion').textContent = currentGameStatus.animals[0].currentPosition;
         document.getElementById('turtle-postion').textContent = currentGameStatus.animals[1].currentPosition;
         document.getElementById('dog-postion').textContent = currentGameStatus.animals[2].currentPosition;
+
+        document.getElementById('rabbit').style.left = currentGameStatus.animals[0].currentPosition+"px";
+        document.getElementById('turtle').style.left = currentGameStatus.animals[1].currentPosition+"px";
+        document.getElementById('dog').style.left = currentGameStatus.animals[2].currentPosition+"px";
+
       });
     </script>
 </body>
