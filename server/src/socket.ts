@@ -2,11 +2,22 @@ import http from 'http';
 
 import { Server } from 'socket.io';
 
+import * as fs from 'fs';
+
+import * as XLSX from 'xlsx';
+
 import { gameSetting, getCurrentCycle} from './domain';
 
 import { SocketEvents, GameStatus, Animal } from './enums';
 
 import { convertMilliSecondToSecond } from './utils';
+
+interface GameResult {
+  n: number;
+  first: Animal;
+  second: Animal;
+  third: Animal;
+}
 
 const socket = (server: http.Server) => {
 
@@ -121,7 +132,15 @@ const socket = (server: http.Server) => {
           ]
         });
 
-        // TODO : 게임 결과 파일에 저장하도록
+        // TODO : 게임 결과 파일에 저장하도록 일단 임시 데이터로 저장
+        const tempGameResult: GameResult = {
+          n: cycleCnt,
+          first: Animal.Rabbit,
+          second: Animal.Turtle,
+          third: Animal.Dog,
+        };
+
+        saveGameResultToExcel(tempGameResult);
 
         startCycle();
       }
@@ -129,9 +148,37 @@ const socket = (server: http.Server) => {
   }
 
   // 0. 초기 설정일부터 현재 사이클 이전의 히스토리 파일 만들기  : 랜덤하게 5/2/3의 승률을 가진 
+
   
   // 1. 처음 게임 시작
   startCycle(); // 사이클을 무한 반복 시작
 };
+
+function saveGameResultToExcel(gameResult: GameResult) {
+  const filePath = './game_results.xlsx';
+
+  let workbook: XLSX.WorkBook;
+  let worksheet: XLSX.WorkSheet;
+
+  if (fs.existsSync(filePath)) {
+    workbook = XLSX.readFile(filePath);
+    worksheet = workbook.Sheets['Results'];
+  } else {
+
+    workbook = XLSX.utils.book_new();
+    worksheet = XLSX.utils.json_to_sheet([]);
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Results');
+  }
+
+  const existingData = XLSX.utils.sheet_to_json(worksheet);
+
+  existingData.push(gameResult);
+
+  const updatedWorksheet = XLSX.utils.json_to_sheet(existingData);
+
+  workbook.Sheets['Results'] = updatedWorksheet;
+
+  XLSX.writeFile(workbook, filePath);
+}
 
 export default socket;
