@@ -1,6 +1,8 @@
 export const gameSetting = {
   totalReadyTimeMilliSecond: 10000,
   totalGameTimeMilliSecond: 10000,
+  readyTimeRenderringIntervalMilliSecond: 1000, // 게임 준비 시간 인터벌 (1000ms)
+  gameRenderringTimeIntervalMillisecond: 100, // 게임 실행 시간 동안의 인터벌 (100ms)
   getTotalCycleTimeMilliSecond(): number {
     return this.totalReadyTimeMilliSecond + this.totalGameTimeMilliSecond;
   },

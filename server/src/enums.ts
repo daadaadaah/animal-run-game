@@ -7,6 +7,7 @@ export enum SocketEvents {
 export enum GameStatus {
   READY = 'ready',
   INPROGRESS = 'inprogress',
+  FINISH = 'finish',
 }
 
 export enum Animal {
