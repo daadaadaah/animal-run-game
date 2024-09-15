@@ -148,12 +148,43 @@ const socket = (server: http.Server) => {
   }
 
   // 0. 초기 설정일부터 현재 사이클 이전의 히스토리 파일 만들기  : 랜덤하게 5/2/3의 승률을 가진 
+  const currentDate = new Date();
 
+  const cycleCnt = getCurrentCycle(gameSetting.initialGameStartDate, currentDate) - 1;
+
+  console.log(generateArrayWithPercentages(cycleCnt)); // 일단 임시로 콘솔에!
   
   // 1. 처음 게임 시작
   startCycle(); // 사이클을 무한 반복 시작
 };
 
+ 
+function generateArrayWithPercentages(n: number): number[][] {
+  const arr = [0, 1, 2];
+
+  const result = [];
+  
+  for (let i = 0; i < n; i++) {
+    const randomStart = Math.floor(Math.random() * n) + 1;
+
+    const percentagesArray = shuffleArray(arr);
+    result.push([randomStart, ...percentagesArray]);
+  }
+
+  return result;
+}
+
+function shuffleArray(array: number[]) {
+  for (let i = array.length - 1; i > 0; i--) {
+    // Generate a random index
+    const j = Math.floor(Math.random() * (i + 1));
+    // Swap elements at index i and j
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+// 게임 결과를 액셀에 저장하는 함수
 function saveGameResultToExcel(gameResult: GameResult) {
   const filePath = './game_results.xlsx';
 
