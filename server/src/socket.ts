@@ -2,6 +2,8 @@ import http from 'http';
 
 import { Server } from 'socket.io';
 
+import { gameSetting, getCurrentCycle} from './domain';
+
 import { SocketEvents, GameStatus, Animal } from './enums';
 
 const socket = (server: http.Server) => {
@@ -17,8 +19,10 @@ const socket = (server: http.Server) => {
 
     socket.on(SocketEvents.DISCONNECTION, () => console.log('user disconnect : ', socket.id));
 
-    const tempGameStatus = {
-      currentCycle: 23,
+    const currentDate = new Date();
+
+    socket.emit(SocketEvents.GAMESTATUS, {
+      currentCycle: getCurrentCycle(gameSetting.initialGameStartDate, currentDate),
       gameStatus: GameStatus.READY, 
       remainingTimeSecond: 1,
       animals: [
@@ -35,9 +39,7 @@ const socket = (server: http.Server) => {
           currentPosition: 2,
         }
       ]
-    };
-
-    socket.emit(SocketEvents.GAMESTATUS, tempGameStatus);
+    });
   });  
 };
 
