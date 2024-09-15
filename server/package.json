@@ -1,0 +1,29 @@
+{
+  "name": "run-game",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "test:watch": "jest --watchAll",
+    "dev": "nodemon index.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/jest": "^29.5.13",
+    "@types/jest-plugin-context": "^2.9.7",
+    "@types/node": "^22.5.5",
+    "jest": "^29.7.0",
+    "jest-plugin-context": "^2.9.0",
+    "nodemon": "^3.1.4",
+    "ts-jest": "^29.2.5",
+    "ts-node": "^10.9.2"
+  },
+  "dependencies": {
+    "@fxts/core": "^1.0.1",
+    "@types/express": "^4.17.21",
+    "express": "^4.21.0",
+    "socket.io": "^4.7.5"
+  }
+}

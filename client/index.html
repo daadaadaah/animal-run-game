@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+
+    <title>Animal Run Game(클라이언트)</title>
+    
+    <!-- TODO : CSS 는 가장 마지막에 다듬자  -->
+    <style> 
+        #race-track {
+            width: 300px;
+            height: 180px;
+            position: relative;
+            background-color: #f0f0f0;
+            border: 1px solid #000;
+        }
+        .animal {
+            width: 30px;
+            height: 30px;
+        }
+        .rabbit { 
+          position: absolute;
+          top: 10px;
+          background-color: red; 
+        }
+        .turtle { 
+          position: absolute;
+          top: 70px;
+          background-color: green; 
+        }
+        .dog {
+          position: absolute;
+          top: 130px; 
+          background-color: blue; 
+        }
+    </style>
+</head>
+<body>
+    <h1>Animal Race Game</h1>
+    <div id="race-track">
+        <div id="rabbit" class="animal rabbit">R</div>
+        <div id="turtle" class="animal turtle">T</div>
+        <div id="dog" class="animal dog">D</div>
+    </div>
+    <div>
+      <p id="msg"></p>
+    </div>
+    <script>
+      const socket = io('http://localhost:3010', {
+        reconnection: false // 자동 재연결을 비활성화
+      });
+
+      // 소켓 연결
+      socket.on('connect', function() {
+        console.log('Connected to server');
+      });
+
+      // 테스트 소켓 통신
+      socket.on('hello world', (msg) => {
+        console.log(msg);
+        document.getElementById('msg').textContent = msg;
+      });
+    </script>
+</body>
+</html>
